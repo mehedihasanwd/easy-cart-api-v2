@@ -122,12 +122,12 @@ export interface IUpdateProductStockByIdServiceParam
 export interface IFindProductsByDiscountServiceParam
   extends common_type.ISkipLimitOptional {}
 
-export interface IUpdateProductImageByIdServiceData
+export interface IUpdateProductImageByIdServiceParam
   extends common_type.IDocumentId {
   data: common_type.IImageProps;
 }
 
-export interface IUpdateProductDiscountByIdServiceData
+export interface IUpdateProductDiscountByIdServiceParam
   extends common_type.IDocumentId {
   data: {
     discount: number;
