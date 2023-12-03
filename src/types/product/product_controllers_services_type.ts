@@ -75,7 +75,8 @@ export interface IUpdateProductStatusByIdServiceParam
   extends common_type.IDocumentId,
     common_type.IStatus {}
 
-export interface IUpdateProductByIdServiceData extends common_type.IDocumentId {
+export interface IUpdateProductByIdServiceParam
+  extends common_type.IDocumentId {
   data: {
     name: string;
     slug: string;

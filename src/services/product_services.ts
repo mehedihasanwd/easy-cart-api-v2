@@ -19,7 +19,7 @@ export const findProductByProp = async ({
 
 export const createNewProduct = async ({
   data,
-}: product_services_type.ICreateNewProductServiceData): Promise<THydratedProductDocument | null> => {
+}: product_services_type.ICreateNewProductServiceParam): Promise<THydratedProductDocument | null> => {
   const new_product: THydratedProductDocument | null =
     data.discount >= 5 && data.discount <= 15
       ? new Product({ ...data })
@@ -233,7 +233,7 @@ export const updateProductStockById = async ({
 export const updateProductById = async ({
   _id,
   data,
-}: product_services_type.IUpdateProductByIdServiceData): Promise<THydratedProductDocument | null> => {
+}: product_services_type.IUpdateProductByIdServiceParam): Promise<THydratedProductDocument | null> => {
   const updated_product: THydratedProductDocument | null =
     await Product.findByIdAndUpdate(
       _id,
@@ -251,7 +251,7 @@ export const updateProductById = async ({
 export const updateProductImageById = async ({
   _id,
   data,
-}: product_services_type.IUpdateProductImageByIdServiceData): Promise<THydratedProductDocument | null> => {
+}: product_services_type.IUpdateProductImageByIdServiceParam): Promise<THydratedProductDocument | null> => {
   const updated_product: THydratedProductDocument | null =
     await Product.findByIdAndUpdate(
       _id,
@@ -341,7 +341,7 @@ export const updateProductTopCategoryById = async ({
 export const updateProductDiscountById = async ({
   _id,
   data,
-}: product_services_type.IUpdateProductDiscountByIdServiceData): Promise<THydratedProductDocument | null> => {
+}: product_services_type.IUpdateProductDiscountByIdServiceParam): Promise<THydratedProductDocument | null> => {
   const updated_product: THydratedProductDocument | null =
     await Product.findByIdAndUpdate(
       _id,
