@@ -7,3 +7,6 @@ export interface ICategoryDocument extends mongoose.Document, ICategorySchema {
 
 export type THydratedCategoryDocument =
   mongoose.HydratedDocument<ICategoryDocument>;
+
+export type TRemovedCategoryDocument =
+  mongoose.ModifyResult<THydratedCategoryDocument>;
