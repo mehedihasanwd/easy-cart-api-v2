@@ -3,6 +3,7 @@ import * as product_controller_type from "../types/product/product_controllers_s
 import * as common_schema_props from "./common_validator_schema_props";
 import * as common_type from "../types/common_type";
 
+// helpers
 const name_schema: joi.StringSchema<string> = common_schema_props.string_schema
   .required()
   .messages({
