@@ -3,7 +3,7 @@ import {
   THydratedCategoryDocument,
   TRemovedCategoryDocument,
 } from "./../types/category/category_document_type";
-import * as category_services_type from "../types/category/category_controller_services_type";
+import * as category_services_type from "../types/category/category_controllers_services_type";
 import * as common_type from "../types/common_type";
 
 export const findCategoryByProp = async ({
