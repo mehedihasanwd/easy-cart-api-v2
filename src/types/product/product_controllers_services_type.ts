@@ -16,11 +16,12 @@ export interface IUpdateProductStatusById
     common_type.IStatus {}
 
 // Services type
-export interface IFindProductByProp extends common_type.IValue {
+export interface IFindProductByPropServiceParam extends common_type.IValue {
   key: "_id" | "slug" | "name";
 }
 
-export interface IFindProducts extends common_type.ISkipLimitOptional {}
+export interface IFindProductsServiceParam
+  extends common_type.ISkipLimitOptional {}
 
 interface ICreateProduct {
   name: string;
@@ -40,15 +41,11 @@ interface ICreateProduct {
   status: common_type.TStatus;
 }
 
-export interface ICreateNewProductData {
+export interface ICreateNewProductServiceData {
   data: ICreateProduct;
 }
 
-export interface ICreateNewProductsData {
-  data: ICreateProduct[];
-}
-
-export interface IFindProductsByTopCategory
+export interface IFindProductsByTopCategoryServiceParam
   extends common_type.ISkipLimitOptional {
   top_category: common_type.TTopCategory;
 }
@@ -69,16 +66,16 @@ type TCountProductsValue =
   | "stockout"
   | "all";
 
-export interface ICountProducts {
+export interface ICountProductsServiceParam {
   key: TCountProductsKey;
   value: TCountProductsValue;
 }
 
-export interface IUpdateProductStatusById
+export interface IUpdateProductStatusByIdServiceParam
   extends common_type.IDocumentId,
     common_type.IStatus {}
 
-export interface IUpdateProductByIdData extends common_type.IDocumentId {
+export interface IUpdateProductByIdServiceData extends common_type.IDocumentId {
   data: {
     name: string;
     slug: string;
@@ -97,37 +94,41 @@ export interface IUpdateProductByIdData extends common_type.IDocumentId {
   };
 }
 
-export interface IUpdateProductTotalReviewsAndAverageRatingById
+export interface IFindTotalReviewsAndRatingByProductIdServiceParam
   extends common_type.IDocumentId {
   total_reviews: number;
   average_rating: number;
 }
 
-export interface IUpdateProductSalesAndStockById
+export interface IUpdateProductSalesAndStockByIdServiceParam
   extends common_type.IDocumentId {
   sales: number;
 }
 
-export interface IFindProductsByStatus
+export interface IFindProductsByStatusServiceParam
   extends common_type.ISkipLimitOptional,
     common_type.IStatus {}
 
-export interface IFindProductsByStock extends common_type.ISkipLimitOptional {
+export interface IFindProductsByStockServiceParam
+  extends common_type.ISkipLimitOptional {
   stock: "in_stock" | "stockout";
 }
 
-export interface IUpdateProductStockById extends common_type.IDocumentId {
+export interface IUpdateProductStockByIdServiceParam
+  extends common_type.IDocumentId {
   in_stock: number;
 }
 
-export interface IFindProductsByDiscount
+export interface IFindProductsByDiscountServiceParam
   extends common_type.ISkipLimitOptional {}
 
-export interface IUpdateProductImageByIdData extends common_type.IDocumentId {
+export interface IUpdateProductImageByIdServiceData
+  extends common_type.IDocumentId {
   data: common_type.IImageProps;
 }
 
-export interface IUpdateProductDiscountById extends common_type.IDocumentId {
+export interface IUpdateProductDiscountByIdServiceData
+  extends common_type.IDocumentId {
   data: {
     discount: number;
     price: number;
