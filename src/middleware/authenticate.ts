@@ -1,8 +1,8 @@
-import { RequestHandler } from "express";
 import jwt from "jsonwebtoken";
-import * as responses from "../utils/response";
-import { IAuthPayload } from "../types/user_and_staff/payload_type";
 import dotenvconfig from "../config/dotenvconfig";
+import { RequestHandler } from "express";
+import { IAuthPayload } from "../types/user_and_staff/payload_type";
+import * as responses from "../utils/response";
 
 interface IAuthUserRoles {
   admin: "admin";
