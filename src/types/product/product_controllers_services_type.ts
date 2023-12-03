@@ -94,7 +94,7 @@ export interface IUpdateProductByIdServiceData extends common_type.IDocumentId {
   };
 }
 
-export interface IFindTotalReviewsAndRatingByProductIdServiceParam
+export interface IUpdateTotalReviewsAndAverageRatingByIdServiceParam
   extends common_type.IDocumentId {
   total_reviews: number;
   average_rating: number;
