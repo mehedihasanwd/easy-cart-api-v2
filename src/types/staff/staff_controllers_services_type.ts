@@ -25,7 +25,7 @@ export interface IResetStaffPassword extends common_type.IResetPassword {}
 export interface IChangeStaffPassword extends common_type.IChangePassword {}
 
 // services type
-interface IStaff {
+interface IStaffProp {
   staff: IStaffDocument;
 }
 
@@ -52,14 +52,14 @@ export interface IUpdateStaffRoleByIdServiceParam
 
 export interface IMatchStaffPasswordServiceParam
   extends common_type.IPassword,
-    IStaff {}
+    IStaffProp {}
 
 export interface IUpdateStaffPasswordServiceParam
   extends common_type.INewPassword,
-    IStaff {}
+    IStaffProp {}
 
 export interface IUpdateStaffImageByIdServiceParam
   extends common_type.IDocumentId,
     common_type.IImage {}
 
-export interface ICreateStaffAuthTokensServiceParam extends IStaff {}
+export interface ICreateStaffAuthTokensServiceParam extends IStaffProp {}
