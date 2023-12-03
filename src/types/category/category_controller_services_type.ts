@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+import { THydratedCategoryDocument } from "./category_document_type";
 import * as common_type from "../common_type";
 
 // controllers type
@@ -37,3 +39,7 @@ export interface IUpdateCategoryByIdServiceData
     slug: string;
   };
 }
+
+export type TRemoveCategoryByIdServiceModifyResult = mongoose.ModifyResult<
+  mongoose.Document<THydratedCategoryDocument>
+>;
