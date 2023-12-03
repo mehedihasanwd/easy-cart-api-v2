@@ -25,7 +25,7 @@ export interface IUploadedImageKey {
 }
 
 export type TS3ManagedUpload = S3.ManagedUpload.SendData;
-export type TS3DeleteObjectOutput = S3.ManagedUpload.SendData;
+export type TS3DeleteObjectOutput = S3.DeleteObjectOutput;
 
 export interface ICloudfrontImageUrl {
   cloud_image: TS3ManagedUpload;
