@@ -41,7 +41,7 @@ interface ICreateProduct {
   status: common_type.TStatus;
 }
 
-export interface ICreateNewProductServiceData {
+export interface ICreateNewProductServiceParam {
   data: ICreateProduct;
 }
 
