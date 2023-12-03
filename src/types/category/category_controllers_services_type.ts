@@ -12,7 +12,7 @@ export interface IFindCategoryByPropServiceParam extends common_type.IValue {
   key: "_id" | "name" | "status";
 }
 
-export interface ICreateNewCategoryServiceData {
+export interface ICreateNewCategoryServiceParam {
   data: {
     name: string;
     description: string;
@@ -29,7 +29,7 @@ export interface IUpdateCategoryStatusByIdServiceParam
   extends common_type.IDocumentId,
     common_type.IStatus {}
 
-export interface IUpdateCategoryByIdServiceData
+export interface IUpdateCategoryByIdServiceParam
   extends common_type.IDocumentId {
   data: {
     name: string;
