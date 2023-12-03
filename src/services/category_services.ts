@@ -19,7 +19,7 @@ export const findCategoryByProp = async ({
 
 export const createNewCategory = async ({
   data,
-}: category_services_type.ICreateNewCategoryServiceData): Promise<THydratedCategoryDocument | null> => {
+}: category_services_type.ICreateNewCategoryServiceParam): Promise<THydratedCategoryDocument | null> => {
   const new_category: THydratedCategoryDocument | null = new Category({
     ...data,
   });
@@ -86,7 +86,7 @@ export const updateCategoryStatusById = async ({
 export const updateCategoryById = async ({
   _id,
   data,
-}: category_services_type.IUpdateCategoryByIdServiceData): Promise<THydratedCategoryDocument | null> => {
+}: category_services_type.IUpdateCategoryByIdServiceParam): Promise<THydratedCategoryDocument | null> => {
   const updated_category: THydratedCategoryDocument | null =
     await Category.findByIdAndUpdate(
       _id,
