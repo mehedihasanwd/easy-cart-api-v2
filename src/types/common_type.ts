@@ -130,9 +130,14 @@ export interface IToken {
   token: string;
 }
 
-export interface ISkipLimit {
+export interface ISkipLimitOptional {
   skip?: number;
   limit?: number;
+}
+
+export interface ISkipLimitRequired {
+  skip: number;
+  limit: number;
 }
 
 export interface IAccessToken {
