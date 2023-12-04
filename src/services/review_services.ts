@@ -73,7 +73,7 @@ export const countReviewsByProp = async ({
 
 export const totalReviewsAndAverageRatingByProductId = async ({
   _id,
-}: common_type.IDocumentId): Promise<review_services_type.ITotalReviewsAverageRatingServiceParam | null> => {
+}: common_type.IDocumentId): Promise<review_services_type.ITotalReviewsAverageRatingDataService | null> => {
   const data: Array<review_services_type.IReviewsRating> | null =
     await Review.aggregate([
       {
@@ -93,13 +93,9 @@ export const totalReviewsAndAverageRatingByProductId = async ({
 
   if (!data || data.length === 0) return null;
 
-  const { avg_rating, total_reviews }: review_services_type.IReviewsRating =
-    data[0];
+  const review_and_rating: review_services_type.IReviewsRating = data[0];
 
-  return {
-    avg_rating,
-    total_reviews,
-  };
+  return review_and_rating;
 };
 
 export const updateProductReviewById = async ({
