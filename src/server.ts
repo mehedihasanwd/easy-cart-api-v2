@@ -14,5 +14,5 @@ connnectDatabase(dotenvconfig.MONGO_URI)
     });
   })
   .catch((e: mongoose.MongooseError) => {
-    console.log(`Mongoose connection erro: ${e.message}`);
+    console.log(`Mongoose connection error: ${e.message}`);
   });
