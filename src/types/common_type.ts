@@ -135,11 +135,6 @@ export interface ISkipLimitOptional {
   limit?: number;
 }
 
-export interface ISkipLimitRequired {
-  skip: number;
-  limit: number;
-}
-
 export interface IAccessToken {
   access_token: string;
 }
