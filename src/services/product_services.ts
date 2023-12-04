@@ -47,8 +47,10 @@ export const findProducts = async ({
           {
             $limit: limit,
           },
+
+          { $sort: { _id: -1 } },
         ])
-      : await Product.find();
+      : await Product.aggregate([{ $sort: { _id: -1 } }]);
 
   if (!products || products.length === 0) return null;
 
