@@ -54,6 +54,6 @@ export interface IUpdateUserPasswordServiceParam
 
 export interface IUpdateUserImageServiceParam
   extends common_type.IDocumentId,
-    common_type.IImage {}
+    common_type.IProfileImage {}
 
 export interface ICreateUserAuthTokensServiceParam extends IUserDocumentProp {}
