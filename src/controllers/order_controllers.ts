@@ -145,59 +145,6 @@ export const getOrders: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const getOrderedProducts: RequestHandler = async (req, res, next) => {
-  const user_id: string = req.query?.userId as string;
-  const current_page: number = Number(req.query?.page || "1");
-  const limit: number = Number(req.query?.limit || "8");
-  const skip: number = (current_page - 1) * limit;
-  const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
-
-  try {
-    const valid_user_id: boolean = isValidParamsId({ _id: user_id });
-
-    if (user_id && !valid_user_id) {
-      return responses.responseErrorMessage(res, 400, {
-        error: "Invalid user id! please try again using a valid one",
-      });
-    }
-
-    const ordered_products: Array<order_controllers_type.IOrderedProductDataService> | null =
-      await order_services.findOrderedProductsByProp({
-        key: user_id ? "user_id" : "all",
-        value: user_id ? user_id : "all",
-        skip,
-        limit,
-      });
-
-    if (!ordered_products) {
-      return responses.responseErrorMessage(res, 404, {
-        error: "No products found!",
-      });
-    }
-
-    const total_products: number =
-      await order_services.countOrderedProductsByProp({
-        key: "user_id",
-        value: user_id,
-      });
-
-    const total_pages: number = Math.ceil(total_products / limit);
-
-    const next_page: number | null =
-      current_page < total_pages ? current_page + 1 : null;
-
-    return responses.responseSuccessData(res, 200, {
-      current_page,
-      prev_page,
-      next_page,
-      total_pages,
-      products: ordered_products,
-    });
-  } catch (e) {
-    return next(e);
-  }
-};
-
 export const getOrdersByUserId: RequestHandler = async (req, res, next) => {
   const _id: string = req.params?.userId;
   const current_page: number = Number(req.query?.page || "1");
@@ -207,7 +154,7 @@ export const getOrdersByUserId: RequestHandler = async (req, res, next) => {
 
   if (!isValidParamsId({ _id })) {
     return responses.responseErrorMessage(res, 400, {
-      error: "Invalid order id! please try again using a valid one",
+      error: "Invalid user id! please try again using a valid one",
     });
   }
 
@@ -221,8 +168,8 @@ export const getOrdersByUserId: RequestHandler = async (req, res, next) => {
       });
     }
 
-    const user_orders: Array<order_controllers_type.IPlacedNewOrderProduct> | null =
-      await order_services.findOrderedProductsByProp({
+    const user_orders: Array<THydratedOrderDocument> | null =
+      await order_services.findOrdersByProp({
         key: "user_id",
         value: _id,
         skip,
@@ -266,30 +213,29 @@ export const getOrdersByProductId: RequestHandler = async (req, res, next) => {
 
   if (!isValidParamsId({ _id })) {
     return responses.responseErrorMessage(res, 400, {
-      error: "Invalid order id! please try again using a valid one",
+      error: "Invalid product id! please try again using a valid one",
     });
   }
 
   try {
-    const product_orders: Array<order_controllers_type.IOrderedProductDataService> | null =
-      await order_services.findOrderedProductsByProp({
+    const orders: Array<THydratedOrderDocument> | null =
+      await order_services.findOrdersByProp({
         key: "product_id",
         value: _id,
         skip,
         limit,
       });
 
-    if (!product_orders) {
+    if (!orders) {
       return responses.responseErrorMessage(res, 404, {
         error: "No orders found!",
       });
     }
 
-    const total_orders: number =
-      await order_services.countOrderedProductsByProp({
-        key: "product_id",
-        value: _id,
-      });
+    const total_orders: number = await order_services.countOrdersByProp({
+      key: "product_id",
+      value: _id,
+    });
 
     const total_pages: number = Math.ceil(total_orders / limit);
     const next_page: number | null =
@@ -300,7 +246,216 @@ export const getOrdersByProductId: RequestHandler = async (req, res, next) => {
       prev_page,
       next_page,
       total_pages,
-      orders: product_orders,
+      orders,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export const getOrderedProducts: RequestHandler = async (req, res, next) => {
+  const current_page: number = Number(req.query?.page || "1");
+  const limit: number = Number(req.query?.limit || "8");
+  const skip: number = (current_page - 1) * limit;
+  const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
+
+  try {
+    const ordered_products: Array<order_controllers_type.IOrderedProductDataService> | null =
+      await order_services.findOrderedProductsByProp({
+        key: "all",
+        value: "all",
+        skip,
+        limit,
+      });
+
+    if (!ordered_products) {
+      return responses.responseErrorMessage(res, 404, {
+        error: "No products found!",
+      });
+    }
+
+    const total_products: number =
+      await order_services.countOrderedProductsByProp({
+        key: "all",
+        value: "all",
+      });
+
+    const total_pages: number = Math.ceil(total_products / limit);
+
+    const next_page: number | null =
+      current_page < total_pages ? current_page + 1 : null;
+
+    return responses.responseSuccessData(res, 200, {
+      current_page,
+      prev_page,
+      next_page,
+      total_pages,
+      products: ordered_products,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export const getOrderedProductsByUserId: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  const user_id: string = req.params?.userId as string;
+  const current_page: number = Number(req.query?.page || "1");
+  const limit: number = Number(req.query?.limit || "8");
+  const skip: number = (current_page - 1) * limit;
+  const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
+
+  if (!isValidParamsId({ _id: user_id })) {
+    return responses.responseErrorMessage(res, 400, {
+      error: "Invalid user id! please try again using a valid one",
+    });
+  }
+
+  try {
+    const ordered_products: Array<order_controllers_type.IOrderedProductDataService> | null =
+      await order_services.findOrderedProductsByProp({
+        key: "user_id",
+        value: user_id,
+        skip,
+        limit,
+      });
+
+    if (!ordered_products) {
+      return responses.responseErrorMessage(res, 404, {
+        error: "No products found!",
+      });
+    }
+
+    const total_products: number =
+      await order_services.countOrderedProductsByProp({
+        key: "user_id",
+        value: user_id,
+      });
+
+    const total_pages: number = Math.ceil(total_products / limit);
+
+    const next_page: number | null =
+      current_page < total_pages ? current_page + 1 : null;
+
+    return responses.responseSuccessData(res, 200, {
+      current_page,
+      prev_page,
+      next_page,
+      total_pages,
+      products: ordered_products,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export const getOrderedProductsByProductId: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  const product_id: string = req.params?.productId as string;
+  const current_page: number = Number(req.query?.page || "1");
+  const limit: number = Number(req.query?.limit || "8");
+  const skip: number = (current_page - 1) * limit;
+  const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
+
+  if (!isValidParamsId({ _id: product_id })) {
+    return responses.responseErrorMessage(res, 400, {
+      error: "Invalid product id! please try again using a valid one",
+    });
+  }
+
+  try {
+    const ordered_products: Array<order_controllers_type.IOrderedProductDataService> | null =
+      await order_services.findOrderedProductsByProp({
+        key: "product_id",
+        value: product_id,
+        skip,
+        limit,
+      });
+
+    if (!ordered_products) {
+      return responses.responseErrorMessage(res, 404, {
+        error: "No products found!",
+      });
+    }
+
+    const total_products: number =
+      await order_services.countOrderedProductsByProp({
+        key: "product_id",
+        value: product_id,
+      });
+
+    const total_pages: number = Math.ceil(total_products / limit);
+
+    const next_page: number | null =
+      current_page < total_pages ? current_page + 1 : null;
+
+    return responses.responseSuccessData(res, 200, {
+      current_page,
+      prev_page,
+      next_page,
+      total_pages,
+      products: ordered_products,
+    });
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export const getOrderedProductsByOrderId: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  const order_id: string = req.params?.orderId as string;
+  const current_page: number = Number(req.query?.page || "1");
+  const limit: number = Number(req.query?.limit || "8");
+  const skip: number = (current_page - 1) * limit;
+  const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
+
+  if (!isValidParamsId({ _id: order_id })) {
+    return responses.responseErrorMessage(res, 400, {
+      error: "Invalid order id! please try again using a valid one",
+    });
+  }
+
+  try {
+    const ordered_products: Array<order_controllers_type.IOrderedProductDataService> | null =
+      await order_services.findOrderedProductsByProp({
+        key: "order_id",
+        value: order_id,
+        skip,
+        limit,
+      });
+
+    if (!ordered_products) {
+      return responses.responseErrorMessage(res, 404, {
+        error: "No products found!",
+      });
+    }
+
+    const total_products: number =
+      await order_services.countOrderedProductsByProp({
+        key: "order_id",
+        value: order_id,
+      });
+
+    const total_pages: number = Math.ceil(total_products / limit);
+
+    const next_page: number | null =
+      current_page < total_pages ? current_page + 1 : null;
+
+    return responses.responseSuccessData(res, 200, {
+      current_page,
+      prev_page,
+      next_page,
+      total_pages,
+      products: ordered_products,
     });
   } catch (e) {
     return next(e);
