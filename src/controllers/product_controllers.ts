@@ -19,6 +19,7 @@ export const postNewProduct: RequestHandler = async (req, res, next) => {
   const discount_number: number = is_discount_number
     ? Number(body?.discount)
     : 0;
+  const image: UploadedFile = req.files?.image as UploadedFile;
 
   const { value, error } =
     product_request_data_validators.post_new_product_validate_schema.validate(
@@ -41,8 +42,6 @@ export const postNewProduct: RequestHandler = async (req, res, next) => {
       },
       { abortEarly: false }
     );
-
-  const image: UploadedFile = req.files?.image as UploadedFile;
 
   if (error) {
     return responses.responseErrorMessages(res, 400, {
@@ -75,7 +74,10 @@ export const postNewProduct: RequestHandler = async (req, res, next) => {
       });
     }
 
-    responses.responseImageErrorMessage(res, image);
+    const image_error_response: responses.TImageErrorResponse | undefined =
+      await responses.responseImageErrorMessage(res, image);
+
+    if (image_error_response) return image_error_response;
 
     const cloud_image: amazon_s3_type.TS3ManagedUpload | undefined =
       await amazon_s3.uploadImageToS3({ image });
@@ -442,7 +444,10 @@ export const patchProductImageById: RequestHandler = async (req, res, next) => {
       });
     }
 
-    responses.responseImageErrorMessage(res, image);
+    const image_error_response: responses.TImageErrorResponse | undefined =
+      await responses.responseImageErrorMessage(res, image);
+
+    if (image_error_response) return image_error_response;
 
     await amazon_s3.removeImageFromS3({ image_key: product.image.key });
     const cloud_image: amazon_s3_type.TS3ManagedUpload | undefined =
