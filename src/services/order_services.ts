@@ -337,6 +337,25 @@ export const countOrdersByProp = async ({
     return await Order.countDocuments({ user_id: value });
   }
 
+  if (key === "product_id") {
+    const orders: Array<{ count: number }> = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $match: {
+          "products.product_id": value,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    return orders[0].count > 0 ? orders[0].count : 0;
+  }
+
   if (key === "status" && order_status_value.includes(value)) {
     return await Order.countDocuments({ status: { $eq: value } });
   }
