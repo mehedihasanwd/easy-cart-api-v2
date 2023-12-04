@@ -33,7 +33,7 @@ export interface ICountReviewsByPropService {
   value: mongoose.Types.ObjectId | "all" | string;
 }
 
-export interface ITotalReviewsAverageRatingServiceParam {
+export interface ITotalReviewsAverageRatingDataService {
   total_reviews: number;
   avg_rating: number;
 }
