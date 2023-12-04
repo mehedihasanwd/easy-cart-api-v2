@@ -681,7 +681,7 @@ export const deleteProductById: RequestHandler = async (req, res, next) => {
         value: product._id,
       });
 
-    if (ordered_products_by_id) {
+    if (!ordered_products_by_id) {
       await amazon_s3.removeImageFromS3({ image_key: product.image.key });
     }
 
