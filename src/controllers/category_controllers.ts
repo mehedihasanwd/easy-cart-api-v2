@@ -26,8 +26,6 @@ export const postNewCategory: RequestHandler = async (req, res, next) => {
     });
   }
 
-  responses.responseImageErrorMessage(res, image);
-
   try {
     const category: THydratedCategoryDocument | null =
       await category_services.findCategoryByProp({
@@ -40,6 +38,11 @@ export const postNewCategory: RequestHandler = async (req, res, next) => {
         error: "Category already exists! name should be unique",
       });
     }
+
+    const image_error_response: responses.TImageErrorResponse | undefined =
+      await responses.responseImageErrorMessage(res, image);
+
+    if (image_error_response) return image_error_response;
 
     const cloud_image: amazon_s3_type.TS3ManagedUpload | undefined =
       await amazon_s3.uploadImageToS3({
