@@ -415,7 +415,7 @@ export const getOrderedProductsByOrderId: RequestHandler = async (
   const order_id: string = req.params?.orderId as string;
   const current_page: number = Number(req.query?.page || "1");
   const limit: number = Number(req.query?.limit || "8");
-  const skip: number = (current_page - 1) * limit;
+  const skip: number = current_page === 1 ? limit : (current_page - 1) * limit;
   const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
 
   if (!isValidParamsId({ _id: order_id })) {
