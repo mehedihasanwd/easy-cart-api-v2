@@ -60,7 +60,7 @@ export interface IUpdateStaffPasswordServiceParam
 
 export interface IUpdateStaffImageByIdServiceParam
   extends common_type.IDocumentId,
-    common_type.IImage {}
+    common_type.IProfileImage {}
 
 export interface ICreateStaffAuthTokensServiceParam
   extends IStaffDocumentProp {}
