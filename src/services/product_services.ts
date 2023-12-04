@@ -101,8 +101,12 @@ export const findProductsByStatus = async ({
           { $skip: skip },
 
           { $limit: limit },
+          { $sort: { _id: -1 } },
         ])
-      : await Product.aggregate([{ $match: { status } }]);
+      : await Product.aggregate([
+          { $match: { status } },
+          { $sort: { _id: -1 } },
+        ]);
 
   if (!products || products.length === 0) return null;
 
