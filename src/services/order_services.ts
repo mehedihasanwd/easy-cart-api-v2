@@ -421,7 +421,7 @@ export const countOrderedProductsByProp = async ({
         },
       },
 
-      { $replaceRoot: { newRoot: "$producst" } },
+      { $replaceRoot: { newRoot: "$products" } },
 
       {
         $group: {
