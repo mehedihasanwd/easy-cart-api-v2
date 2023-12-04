@@ -162,8 +162,13 @@ export const findProductsByDiscount = async ({
           { $skip: skip },
 
           { $limit: limit },
+
+          { $sort: { _id: -1 } },
         ])
-      : await Product.aggregate([{ $match: { discount: { $gte: 5 } } }]);
+      : await Product.aggregate([
+          { $match: { discount: { $gte: 5 } } },
+          { $sort: { _id: -1 } },
+        ]);
 
   if (!products || products.length === 0) return null;
 
