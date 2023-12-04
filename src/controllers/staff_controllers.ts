@@ -627,7 +627,10 @@ export const patchStaffProfileImageById: RequestHandler = async (
       });
     }
 
-    responses.responseImageErrorMessage(res, image);
+    const image_error_response: responses.TImageErrorResponse | undefined =
+      await responses.responseImageErrorMessage(res, image);
+
+    if (image_error_response) return image_error_response;
 
     if (staff.image.isChangedSelf) {
       await amazon_s3.removeImageFromS3({ image_key: staff.image.key });
