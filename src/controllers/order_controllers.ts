@@ -256,7 +256,7 @@ export const getOrdersByProductId: RequestHandler = async (req, res, next) => {
 export const getOrderedProducts: RequestHandler = async (req, res, next) => {
   const current_page: number = Number(req.query?.page || "1");
   const limit: number = Number(req.query?.limit || "8");
-  const skip: number = current_page === 1 ? limit : (current_page - 1) * limit;
+  const skip: number = (current_page - 1) * limit;
   const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
 
   try {
@@ -305,7 +305,7 @@ export const getOrderedProductsByUserId: RequestHandler = async (
   const user_id: string = req.params?.userId as string;
   const current_page: number = Number(req.query?.page || "1");
   const limit: number = Number(req.query?.limit || "8");
-  const skip: number = current_page === 1 ? limit : (current_page - 1) * limit;
+  const skip: number = (current_page - 1) * limit;
   const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
 
   if (!isValidParamsId({ _id: user_id })) {
@@ -360,7 +360,7 @@ export const getOrderedProductsByProductId: RequestHandler = async (
   const product_id: string = req.params?.productId as string;
   const current_page: number = Number(req.query?.page || "1");
   const limit: number = Number(req.query?.limit || "8");
-  const skip: number = current_page === 1 ? limit : (current_page - 1) * limit;
+  const skip: number = (current_page - 1) * limit;
   const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
 
   if (!isValidParamsId({ _id: product_id })) {
@@ -415,7 +415,7 @@ export const getOrderedProductsByOrderId: RequestHandler = async (
   const order_id: string = req.params?.orderId as string;
   const current_page: number = Number(req.query?.page || "1");
   const limit: number = Number(req.query?.limit || "8");
-  const skip: number = current_page === 1 ? limit : (current_page - 1) * limit;
+  const skip: number = (current_page - 1) * limit;
   const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
 
   if (!isValidParamsId({ _id: order_id })) {
