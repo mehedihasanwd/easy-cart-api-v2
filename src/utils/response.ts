@@ -2,6 +2,8 @@ import express from "express";
 import { UploadedFile } from "express-fileupload";
 import { IClearCookie, ISaveCookie } from "../types/cookie_config_type";
 
+export type TImageErrorResponse = express.Response<any, Record<string, any>>;
+
 export const responseSuccessData = (
   res: express.Response,
   status: number = 400,
@@ -40,10 +42,10 @@ export const responseSuccessMessage = (
   return res.status(status).json(data);
 };
 
-export const responseImageErrorMessage = (
+export const responseImageErrorMessage = async (
   res: express.Response,
-  image: UploadedFile
-): express.Response | void => {
+  image: UploadedFile | undefined
+): Promise<TImageErrorResponse | undefined> => {
   const fileTypes: string[] = ["image/jpeg", "image/png", "image/jpg"];
   const image_size: number = 1024;
 
@@ -55,7 +57,7 @@ export const responseImageErrorMessage = (
 
   if (Array.isArray(image)) {
     return responseErrorMessage(res, 400, {
-      error: "Multiple image upload does not allowed!",
+      error: "Multiple image uploads are not allowed!",
     });
   }
 
@@ -70,6 +72,9 @@ export const responseImageErrorMessage = (
       error: `Image should be less than: ${image_size}kb or 1mb`,
     });
   }
+
+  // No errors found, return undefined (no response)
+  return undefined;
 };
 
 export const responseSuccessDataAndSaveCookie = (
