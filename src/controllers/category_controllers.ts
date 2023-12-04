@@ -63,7 +63,7 @@ export const postNewCategory: RequestHandler = async (req, res, next) => {
           slug: value.name,
           image: {
             key: cloud_image.Key,
-            url: cloud_image.Location,
+            url: amazon_s3.cloudfrontImageUrl({ cloud_image }),
           },
         },
       });
