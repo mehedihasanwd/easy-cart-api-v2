@@ -208,7 +208,7 @@ export const findOrdersByProp = async ({
 
             { $sort: { _id: -1 } },
           ]
-        : [{ $sort: { _id: -1 } }]
+        : [...orders_by_user_id_pipeline_config, { $sort: { _id: -1 } }]
     );
   }
 
@@ -230,7 +230,7 @@ export const findOrdersByProp = async ({
 
             { $sort: { _id: -1 } },
           ]
-        : [{ $sort: { _id: -1 } }]
+        : [...orders_by_product_id_pipeline_config, { $sort: { _id: -1 } }]
     );
   }
 
