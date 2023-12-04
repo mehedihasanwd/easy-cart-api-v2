@@ -130,6 +130,8 @@ export const findProductsByStock = async ({
           { $skip: skip },
 
           { $limit: limit },
+
+          { $sort: { _id: -1 } },
         ])
       : await Product.aggregate([
           {
@@ -137,6 +139,8 @@ export const findProductsByStock = async ({
               in_stock: stock === "in_stock" ? { $gte: 1 } : { $lt: 1 },
             },
           },
+
+          { $sort: { _id: -1 } },
         ]);
 
   if (!products || products.length === 0) return null;
