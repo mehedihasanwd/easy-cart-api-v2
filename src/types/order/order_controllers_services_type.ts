@@ -50,7 +50,7 @@ export interface ICreateNewOrderServiceParam {
 }
 
 export interface ICountOrdersByPropServiceParam {
-  key: "all" | "user_id" | "status";
+  key: "all" | "user_id" | "status" | "product_id";
   value: "all" | string;
 }
 
