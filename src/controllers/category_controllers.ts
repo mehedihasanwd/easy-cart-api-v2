@@ -140,7 +140,10 @@ export const patchCategoryImageById: RequestHandler = async (
       });
     }
 
-    responses.responseImageErrorMessage(res, image);
+    const image_error_response: responses.TImageErrorResponse | undefined =
+      await responses.responseImageErrorMessage(res, image);
+
+    if (image_error_response) return image_error_response;
 
     await amazon_s3.removeImageFromS3({ image_key: category.image.key });
 
