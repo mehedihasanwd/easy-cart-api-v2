@@ -256,7 +256,7 @@ export const getOrdersByProductId: RequestHandler = async (req, res, next) => {
 export const getOrderedProducts: RequestHandler = async (req, res, next) => {
   const current_page: number = Number(req.query?.page || "1");
   const limit: number = Number(req.query?.limit || "8");
-  const skip: number = (current_page - 1) * limit;
+  const skip: number = current_page === 1 ? limit : (current_page - 1) * limit;
   const prev_page: number | null = current_page > 1 ? current_page - 1 : null;
 
   try {
