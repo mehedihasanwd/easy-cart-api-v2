@@ -309,8 +309,11 @@ export const findOrderedProductsByProp = async ({
       skip && limit
         ? [
             ...all_ordered_products_pipeline_config,
+
             { $skip: skip },
+
             { $limit: limit },
+
             { $sort: { _id: -1 } },
           ]
         : [...all_ordered_products_pipeline_config, { $sort: { _id: -1 } }]
