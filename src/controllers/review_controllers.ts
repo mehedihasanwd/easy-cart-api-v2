@@ -345,15 +345,15 @@ export const putReviewById: RequestHandler = async (req, res, next) => {
       });
     }
 
-    const found_product_by_uid: THydratedProductDocument | null =
-      await product_services.findProductByProp({
-        key: "_id",
+    const found_review_by_uid: THydratedReviewDocument | null =
+      await review_services.findReviewByProp({
+        key: "product_uid",
         value: value.product_uid,
       });
 
-    if (!found_product_by_uid) {
+    if (!found_review_by_uid) {
       return responses.responseErrorMessage(res, 404, {
-        error: "Product not found with the provided unique product id!",
+        error: "Review not found with the provided unique product id!",
       });
     }
 
